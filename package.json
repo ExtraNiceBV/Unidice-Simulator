@@ -1,0 +1,19 @@
+{
+  "name": "com.unidice.simulator",
+  "displayName": "Unidice Simulator",
+  "description": "A simulator for testing Unidice apps in the editor or browser.",
+  "version": "1.0.0-preview.0",
+  "unity": "2020.3",
+  "license": "GNU General Public License v3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ExtraNiceBV/Unidice-Simulator.git"
+  },
+  "author": {
+    "name": "Extra Nice",
+    "email": "contact@extra-nice.net",
+    "url": "https://extra-nice.net"
+  },
+  "dependencies": {},
+  "keywords": [ ]
+}
