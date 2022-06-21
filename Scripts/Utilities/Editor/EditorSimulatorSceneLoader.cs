@@ -8,14 +8,12 @@ using UnityEngine.SceneManagement;
 namespace Unidice.Simulator.Editor.Utilities
 {
 
-    [InitializeOnLoad]
     public class EditorSimulatorSceneLoader
     {
         private static bool _simulatorSceneLoaded;
 
-        private static readonly StringBuilder _sb = new StringBuilder();
-
-        static EditorSimulatorSceneLoader()
+        [InitializeOnLoadMethod] 
+        private static void Initialize()
         {
             EditorApplication.hierarchyChanged += CheckSimulatorSceneLoaded;
             EditorApplication.hierarchyWindowItemOnGUI += HierarchyWindowItemOnGUI;
