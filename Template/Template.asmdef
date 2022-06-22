@@ -1,0 +1,20 @@
+{
+    "name": "Unidice.Template",
+    "rootNamespace": "Template",
+    "references": [
+        "GUID:f48e504b2aff0d042a5a875222c79551",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:bdf5ac0dedda7d44590c05e914814e4a",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
