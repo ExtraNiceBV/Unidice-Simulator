@@ -50,7 +50,10 @@ namespace Unidice.Simulator.Utilities
             rect.xMin = rect.xMax - 100;
             if (GUI.Button(rect, "Load Simulator"))
             {
-                var scene = EditorSceneManager.OpenScene("Packages/com.unidice.simulator/Samples/Simulator/Scenes/Simulator.unity", OpenSceneMode.Additive);
+                const string scenePath = "Packages/com.unidice.simulator/Scenes/Simulator.unity";
+                AssetDatabase.ImportAsset(scenePath);
+                var sceneAsset = AssetDatabase.LoadAssetAtPath(scenePath, typeof(SceneAsset));
+                var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
                 EditorSceneManager.MoveSceneBefore(scene, SceneManager.GetSceneAt(0));
                 _simulatorSceneLoaded = true;
             }
