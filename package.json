@@ -19,5 +19,12 @@
     "com.unidice.sdk": "https://github.com/ExtraNiceBV/Unidice-SDK.git",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
   },
+  "samples": [
+	  {
+		"displayName": "Simulator",
+		"description": "Contains the simulator scene for simulating the Unidice in the editor or browser.",
+		"path": "Samples~/Simulator"
+	  }
+	],
   "keywords": [ ]
 }
