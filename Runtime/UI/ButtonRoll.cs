@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Unidice.Simulator.UI
 {
-    public class ButtonTap : MonoBehaviour
+    public class ButtonRoll : MonoBehaviour
     {
         private UnidiceSimulator _unidice;
         private UnidiceRotator _rotator;
@@ -15,16 +15,19 @@ namespace Unidice.Simulator.UI
         {
             _unidice = FindObjectOfType<UnidiceSimulator>();
             _rotator = FindObjectOfType<UnidiceRotator>();
-            _rotator.OnRotated.AddListener(OnTapChanged);
-            button.onClick.AddListener(TapTop);
-            _unidice.Sides.OnTapDisabled.AddListener(_ => OnTapChanged());
-            _unidice.Sides.OnTapEnabled.AddListener(_ => OnTapChanged());
-            OnTapChanged();
+            _rotator.OnStartedRolling.AddListener(OnRolling);
+            _rotator.OnRolled.AddListener(OnRolled);
+            button.onClick.AddListener(_rotator.Roll);
         }
 
-        private void OnTapChanged()
+        private void OnRolled()
         {
-            button.interactable = _unidice.Sides.CanTap(SideWorld.Top);
+            button.interactable = true;
+        }
+
+        private void OnRolling()
+        {
+            button.interactable = false;
         }
 
         public void TapTop()

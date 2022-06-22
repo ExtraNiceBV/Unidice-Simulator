@@ -14,8 +14,8 @@ namespace Unidice.Simulator
         [SerializeField] private float zoomSpeed = 2;
         [SerializeField] private RenderTextureRaycaster screenRaycaster;
         [SerializeField] private PhoneScreen phoneScreen;
-        [SerializeField] private ButtonLock buttonLock;
 
+        private ButtonLock _buttonLock;
         private bool _pointerInside;
         private float _zoomPercentage;
         private float _zoomVelocity;
@@ -25,10 +25,11 @@ namespace Unidice.Simulator
 
         public void Start()
         {
-            buttonLock.onToggled.AddListener(() => _locked = buttonLock.Locked);
+            _buttonLock = FindObjectOfType<ButtonLock>();
+            _buttonLock.onToggled.AddListener(() => _locked = _buttonLock.Locked);
             if (Application.isEditor)
             {
-                buttonLock.Press(); // Has to be in Start
+                _buttonLock.Press(); // Has to be in Start
                 _zoomPercentage = 1;
             }
         }
