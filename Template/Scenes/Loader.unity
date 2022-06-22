@@ -221,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameScene: 2
   outputText: {fileID: 1698559697}
+  loadSteps: []
 --- !u!4 &573038099
 Transform:
   m_ObjectHideFlags: 0
@@ -247,8 +248,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc89960e3755402c8c8d7bc825e167c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: To work on a game scene and test it in Editor, open the Simulator and the
+  text: 'To work on a game scene and test it in Editor, open the Simulator and the
     game scene together in the hierarchy.
+
+
+    You can register extra components
+    (inherited from AppLoaderLoadStep) as load steps. They will be loaded before
+    any further scenes are loaded.'
 --- !u!1 &631611121
 GameObject:
   m_ObjectHideFlags: 0
