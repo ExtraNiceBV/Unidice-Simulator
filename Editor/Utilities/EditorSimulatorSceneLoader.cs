@@ -1,3 +1,5 @@
+using System.Linq;
+using Harmony;
 using Unidice.SDK.System;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -50,12 +52,18 @@ namespace Unidice.Simulator.Utilities
             rect.xMin = rect.xMax - 100;
             if (GUI.Button(rect, "Load Simulator"))
             {
-                const string scenePath = "Packages/com.unidice.simulator/Scenes/Simulator.unity";
-                AssetDatabase.ImportAsset(scenePath);
-                var sceneAsset = AssetDatabase.LoadAssetAtPath(scenePath, typeof(SceneAsset));
-                var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
-                EditorSceneManager.MoveSceneBefore(scene, SceneManager.GetSceneAt(0));
-                _simulatorSceneLoaded = true;
+                var assets = AssetDatabase.FindAssets("Simulator t:Scene l:Unidice");
+                foreach (var path in assets.Select(AssetDatabase.GUIDToAssetPath).OrderBy(path => path)) // Assets first, Packages later
+                {
+                    var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+                    EditorSceneManager.MoveSceneBefore(scene, SceneManager.GetSceneAt(0));
+                    if(EditorBuildSettings.scenes.All(s => s.path != path))
+                    {
+                        EditorBuildSettings.scenes = EditorBuildSettings.scenes.AddToArray(new EditorBuildSettingsScene(path, true));
+                    }
+                    _simulatorSceneLoaded = true;
+                    break;
+                }
             }
         }
     }
