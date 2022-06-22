@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEditor;
 
-namespace Unidice.Simulator.Editor.Utilities
+namespace Unidice.Simulator.Utilities
 {
     /// <summary>
     /// When updating the solution file, group every project that does not contain an ignored string into a folder.

@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Unidice.SDK.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unidice.Simulator.Editor.Utilities
+namespace Unidice.Simulator.Utilities
 {
     /// <summary>
     /// Adds a menu on "Swappable" fields to swap the script class, if other subclasses exist.

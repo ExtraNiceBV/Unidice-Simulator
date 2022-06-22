@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Unidice.Simulator.Editor.Utilities
+namespace Unidice.Simulator.Utilities
 {
     /// <summary>
     /// Adds a menu on Scriptable Objects to swap the script class, if other subclasses exist.

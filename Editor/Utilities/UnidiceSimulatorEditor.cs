@@ -3,7 +3,7 @@ using Unidice.Simulator.Unidice;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unidice.Simulator.Editor.Utilities
+namespace Unidice.Simulator.Utilities
 {
     [CustomEditor(typeof(UnidiceSimulator))]
     public class UnidiceSimulatorEditor : UnityEditor.Editor

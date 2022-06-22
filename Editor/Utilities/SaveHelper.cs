@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace Unidice.Simulator.Editor.Utilities
+namespace Unidice.Simulator.Utilities
 {
     public static class SaveHelper
     {

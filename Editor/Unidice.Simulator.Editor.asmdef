@@ -1,9 +1,8 @@
 {
     "name": "Unidice.Simulator.Editor",
-    "rootNamespace": "Unidice.Simulator.Editor",
+    "rootNamespace": "Unidice.Simulator",
     "references": [
         "GUID:f48e504b2aff0d042a5a875222c79551",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
         "GUID:bdf5ac0dedda7d44590c05e914814e4a"
     ],
     "includePlatforms": [

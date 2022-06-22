@@ -3,7 +3,7 @@ using Unidice.SDK.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unidice.Simulator.Editor.Utilities
+namespace Unidice.Simulator.Utilities
 {
     /// <summary>
     /// Replaces a field with a button.

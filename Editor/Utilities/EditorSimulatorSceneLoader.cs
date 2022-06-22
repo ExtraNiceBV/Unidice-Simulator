@@ -1,11 +1,10 @@
-using System.Text;
 using Unidice.SDK.System;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Unidice.Simulator.Editor.Utilities
+namespace Unidice.Simulator.Utilities
 {
 
     public class EditorSimulatorSceneLoader
