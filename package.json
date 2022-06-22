@@ -14,6 +14,10 @@
     "email": "contact@extra-nice.net",
     "url": "https://extra-nice.net"
   },
-  "dependencies": {},
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.6",
+    "com.unidice.sdk": "https://github.com/ExtraNiceBV/Unidice-SDK.git",
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask"
+  },
   "keywords": [ ]
 }
