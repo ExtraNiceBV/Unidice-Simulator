@@ -45,7 +45,7 @@ namespace Unidice.Simulator.Utilities
             if (Application.isPlaying) return;
             if (instanceID >= 0) return; // scenes always have negative ID
             if (EditorUtility.InstanceIDToObject(instanceID)) return; // some instances also have negative ID, exclude them
-
+            
             var rect = selectionRect;
             //rect.xMin += rect.width / 3f * 2f;
             rect.xMax -= 10;
