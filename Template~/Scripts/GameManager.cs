@@ -113,11 +113,12 @@ namespace Template
             }
 
             // In the simulator loading is very fast. On a real Unidice this can take much longer, so make sure you always await loading before showing images on the die and preload images when possible.
-            LoadSequences(Progress.Create<float>(ShowProgress), GetSequences(), this.GetCancellationTokenOnDestroy()).ContinueWith(OpenFirstScreen).Forget();
+            LoadSequences(Progress.Create<float>(ShowProgress), GetSequences(), this.GetCancellationTokenOnDestroy()).ContinueWith(OpenModalScreen).Forget();
         }
 
-        private static void OpenFirstScreen()
+        private static void OpenModalScreen()
         {
+			// Continue with whatever code you want to run when things are loaded here on in the example screen
             FindObjectOfType<ModalScreenBase>(true).Open();
         }
 
@@ -145,8 +146,8 @@ namespace Template
             foreach (var sequence in numberGenerator.GetSequences(0, 10)) yield return sequence;
 
             // Get the sequences from all screens (you'll probably want to limit this to the current/next screen)
-            foreach (var sequence in FindObjectsOfType<ScreenBase>().SelectMany(s => s.GetSequences())) yield return sequence;
-            foreach (var sequence in FindObjectsOfType<ModalScreenBase>().SelectMany(s => s.GetSequences())) yield return sequence;
+            foreach (var sequence in FindObjectsOfType<ScreenBase>(true).SelectMany(s => s.GetSequences())) yield return sequence;
+            foreach (var sequence in FindObjectsOfType<ModalScreenBase>(true).SelectMany(s => s.GetSequences())) yield return sequence;
         }
 
 
