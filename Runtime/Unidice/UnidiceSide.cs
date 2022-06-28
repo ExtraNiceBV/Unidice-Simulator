@@ -82,13 +82,13 @@ namespace Unidice.Simulator.Unidice
             Texture2D texture = null;
             if (CurrentSequence)
             {
-                if (CurrentSequence.indices == null)
+                if (CurrentSequence.Indices == null)
                 {
                     Debug.LogError($"Sequence {CurrentSequence.name} has not been loaded.", CurrentSequence);
                 }
                 else
                 {
-                    var index = CurrentSequence.indices[GetIndex(Time.realtimeSinceStartupAsDouble - _startTime, CurrentSequence)];
+                    var index = CurrentSequence.Indices[GetIndex(Time.realtimeSinceStartupAsDouble - _startTime, CurrentSequence)];
                     texture = _database.GetTexture(index);
                 }
             }
@@ -108,19 +108,19 @@ namespace Unidice.Simulator.Unidice
 
         private int GetIndex(double time, ImageSequence sequence)
         {
-            if (sequence.animation.Length <= 1) return 0;
+            if (sequence.Animation.Length <= 1) return 0;
 
-            switch (sequence.loop)
+            switch (sequence.Loop)
             {
                 case ImageSequence.LoopMode.Once:
-                    return Mathf.FloorToInt(Mathf.Clamp((float)(time * sequence.fps), 0, sequence.indices.Length - 1));
+                    return Mathf.FloorToInt(Mathf.Clamp((float)(time * sequence.FPS), 0, sequence.Indices.Length - 1));
                 case ImageSequence.LoopMode.Loop:
-                    return Mathf.FloorToInt((float)(time * sequence.fps) % CurrentSequence.animation.Length);
+                    return Mathf.FloorToInt((float)(time * sequence.FPS) % CurrentSequence.Animation.Length);
                 case ImageSequence.LoopMode.PingPong:
                     // Offset so start and end aren't displayed 2x as long
-                    return Mathf.FloorToInt(Mathf.PingPong((float)(time * sequence.fps) - 0.5f, sequence.animation.Length) + 0.5f);
+                    return Mathf.FloorToInt(Mathf.PingPong((float)(time * sequence.FPS) - 0.5f, sequence.Animation.Length) + 0.5f);
                 case ImageSequence.LoopMode.Random:
-                    return GetRandom(time, sequence.fps, sequence.animation.Length);
+                    return GetRandom(time, sequence.FPS, sequence.Animation.Length);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
