@@ -108,19 +108,19 @@ namespace Unidice.Simulator.Unidice
 
         private int GetIndex(double time, ImageSequence sequence)
         {
-            if (sequence.Animation.Length <= 1) return 0;
+            if (sequence.Animation.Count <= 1) return 0;
 
             switch (sequence.Loop)
             {
                 case ImageSequence.LoopMode.Once:
-                    return Mathf.FloorToInt(Mathf.Clamp((float)(time * sequence.FPS), 0, sequence.Indices.Length - 1));
+                    return Mathf.FloorToInt(Mathf.Clamp((float)(time * sequence.FPS), 0, sequence.Indices.Count - 1));
                 case ImageSequence.LoopMode.Loop:
-                    return Mathf.FloorToInt((float)(time * sequence.FPS) % CurrentSequence.Animation.Length);
+                    return Mathf.FloorToInt((float)(time * sequence.FPS) % CurrentSequence.Animation.Count);
                 case ImageSequence.LoopMode.PingPong:
                     // Offset so start and end aren't displayed 2x as long
-                    return Mathf.FloorToInt(Mathf.PingPong((float)(time * sequence.FPS) - 0.5f, sequence.Animation.Length) + 0.5f);
+                    return Mathf.FloorToInt(Mathf.PingPong((float)(time * sequence.FPS) - 0.5f, sequence.Animation.Count) + 0.5f);
                 case ImageSequence.LoopMode.Random:
-                    return GetRandom(time, sequence.FPS, sequence.Animation.Length);
+                    return GetRandom(time, sequence.FPS, sequence.Animation.Count);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
