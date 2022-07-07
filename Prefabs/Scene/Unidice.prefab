@@ -135,7 +135,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   images:
+    _blitBackgroundMaterial: {fileID: 2100000, guid: c9a8612a452f14a4991630649ffda3c0, type: 2}
+    _blitLayerMaterial: {fileID: 2100000, guid: 0d78c7d7756676c41b788b2612e517ed, type: 2}
     loadedImages: []
+    shaderBlitBackground: {fileID: 0}
+    shaderBlitLayer: {fileID: 0}
   sides:
     top:
       renderer: {fileID: 3563645817576219094}
@@ -166,6 +170,7 @@ MonoBehaviour:
   moveTargetSecretZoom: {fileID: 0}
   moveTargetNormalZoom: {fileID: 0}
   objSecretZone: {fileID: 0}
+  rotator: {fileID: 0}
   zoomSpeed: 2
 --- !u!54 &109661738
 Rigidbody:
@@ -198,6 +203,7 @@ MonoBehaviour:
   rollSpeed: 15
   rollLiftSpeed: 5
   cursorNotifier: {fileID: 1286057449575414916}
+  Gravity: {x: -0, y: -10, z: -0}
 --- !u!114 &1286057449575414916
 MonoBehaviour:
   m_ObjectHideFlags: 0
