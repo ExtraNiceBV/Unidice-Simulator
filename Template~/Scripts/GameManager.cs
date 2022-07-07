@@ -106,6 +106,18 @@ namespace Template
 
         private void OnGameDataLoaded()
         {
+            SyncSequences(this.GetCancellationTokenOnDestroy()).ContinueWith(() => OpenFirstScreen(this.GetCancellationTokenOnDestroy())).Forget();
+        }
+
+        private static async UniTask OpenFirstScreen(CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested) return;
+            FindObjectOfType<ScreenBase>(true).Open();
+        }
+
+
+        public async UniTask SyncSequences(CancellationToken cancellationToken)
+        {
             static void ShowProgress(float p)
             {
                 // Show loading progress
@@ -113,7 +125,7 @@ namespace Template
             }
 
             // In the simulator loading is very fast. On a real Unidice this can take much longer, so make sure you always await loading before showing images on the die and preload images when possible.
-            LoadSequences(Progress.Create<float>(ShowProgress), GetSequences(), this.GetCancellationTokenOnDestroy()).ContinueWith(OpenModalScreen).Forget();
+            await LoadSequences(Progress.Create<float>(ShowProgress), GetSequences(), cancellationToken);
         }
 
         private static void OpenModalScreen()
@@ -123,7 +135,7 @@ namespace Template
         }
 
         /// <summary>
-        /// Load all images to unidice
+        /// Load all images to Unidice
         /// </summary>
         private async UniTask LoadSequences(IProgress<float> progress, IEnumerable<ImageSequence> sequences, CancellationToken cancellationToken)
         {
@@ -221,14 +233,8 @@ namespace Template
         public ImageSequence GeneratePlayerSequence(Sprite icon, string labelText)
         {
             // Sequences are scriptable objects and you can also create and store them like that from Unity if they are not dynamic.
-            return ImageSequence.Create(labelText, new[] { playerImageGenerator.CreateTexture(icon, labelText) });
-
             // Sequences are animations, so if there is only one frame, that's the only element in the array. Here we use the image generator to create the texture we want.
-            sequence.animation = new[] { playerImageGenerator.CreateTexture(icon, labelText) };
-            sequence.name = labelText;
-            sequence.loop = ImageSequence.LoopMode.Loop;
-
-            return sequence;
+            return ImageSequence.Create(labelText, new[] { playerImageGenerator.CreateTexture(icon, labelText) });
         }
     }
 }

@@ -23,6 +23,7 @@ namespace Template.Screens
         [SerializeField] private Player[] _players;
         [SerializeField] private TextMeshProUGUI _instructions;
         private IUnidice _unidice;
+        public List<Texture2D> debugTextures = new List<Texture2D>();
 
         public override IEnumerable<ImageSequence> GetSequences()
         {
@@ -55,7 +56,7 @@ namespace Template.Screens
             _unidice.Sides.Clear();
 
             // Wait until the game manager is done loading
-            await UniTask.WaitUntil(() => GameManager.Instance.AllSequencesLoaded, cancellationToken: cancellationToken);
+            await GameManager.Instance.SyncSequences(cancellationToken);
 
             // Show the player icons on the die
             for (int i = 0; i < _players.Length; i++)
