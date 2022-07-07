@@ -14,14 +14,14 @@ namespace Unidice.Simulator.Unidice
         [SerializeField] private int rollSpeed = 20;
         [SerializeField] private int rollLiftSpeed = 5;
         [SerializeField] private CursorNotifier cursorNotifier;
-        private Rigidbody _rigidbody;
+
+        public Vector3 Gravity = Vector3.up * -10;
         private bool _isRolling;
         private SpringJoint _joint;
         private float _jointSpringAmount;
+        private Rigidbody _rigidbody;
 
-        public UnityEvent OnRotated { get; } = new UnityEvent();
-        public UnityEvent OnRolled { get; } = new UnityEvent();
-        public UnityEvent OnStartedRolling { get; } = new UnityEvent();
+        private static int RandomSign => Random.value > 0.5f ? 1 : -1;
 
         public void Start()
         {
@@ -31,55 +31,22 @@ namespace Unidice.Simulator.Unidice
             _jointSpringAmount = _joint.spring;
         }
 
-        public void Roll()
+        private async UniTask ApplyGravitySequence(CancellationToken cancellationToken)
         {
-            if (!_isRolling)
+            while (!_rigidbody.IsSleeping() && _rigidbody.angularVelocity.magnitude > 0.06f)
             {
-                RollSequence(this.GetCancellationTokenOnDestroy()).Forget();
+                
+                _rigidbody.AddForce(Gravity, ForceMode.Acceleration);
+                await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken);
             }
+            Debug.Log("Gravity done.");
         }
-
-        private async UniTask RollSequence(CancellationToken cancellationToken)
-        {
-            _isRolling = true;
-            OnStartedRolling.Invoke();
-            cursorNotifier.enabled = false;
-            FPSManager.FPS = TargetFPS.High;
-            transform.position += Vector3.up * 0.5f;
-            transform.rotation = Random.rotation;
-            _rigidbody.isKinematic = false;
-            _rigidbody.velocity = Vector3.up * rollLiftSpeed * (RollInSecret ? 0.5f : 1);
-            // Make sure we don't just spin around one axis
-            _rigidbody.angularVelocity = rollSpeed * new Vector3(RandomSign * Random.Range(0.5f, 1f), RandomSign * Random.Range(0.5f, 1f), RandomSign * Random.Range(0.5f, 1f)); 
-            _joint.spring = 0;
-            await UniTask.WaitUntil(() => _rigidbody.velocity.y < 0, cancellationToken: cancellationToken);
-            _joint.spring = _jointSpringAmount;
-
-            await UniTask.WaitUntil(() => _rigidbody.IsSleeping(), cancellationToken: cancellationToken);
-            FPSManager.FPS = TargetFPS.Low;
-            cursorNotifier.enabled = true;
-            _isRolling = false;
-            OnRotated.Invoke();
-            OnRolled.Invoke();
-        }
-
-        private static int RandomSign => Random.value > 0.5f ? 1 : -1;
-
-        public bool RollInSecret { get; set; }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (_isRolling) return;
 
             _rigidbody.isKinematic = true;
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            if (_isRolling) return;
-
-            _rigidbody.isKinematic = false;
-            Invoker.InvokeWhen(OnRotated.Invoke, () => _rigidbody.IsSleeping());
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -93,6 +60,53 @@ namespace Unidice.Simulator.Unidice
             transform.RotateAround(position, Vector3.right, eventData.delta.y);
             transform.RotateAround(position, Vector3.back, eventData.delta.x);
             // Debug.Log("OnDrag");
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            if (_isRolling) return;
+
+            _rigidbody.isKinematic = false;
+            Invoker.InvokeWhen(OnRotated.Invoke, () => _rigidbody.IsSleeping());
+        }
+
+        public UnityEvent OnRotated { get; } = new UnityEvent();
+        public UnityEvent OnRolled { get; } = new UnityEvent();
+        public UnityEvent OnStartedRolling { get; } = new UnityEvent();
+
+        public bool RollInSecret { get; set; }
+
+        public void Roll()
+        {
+            if (!_isRolling) RollSequence(this.GetCancellationTokenOnDestroy()).Forget();
+        }
+
+        private async UniTask RollSequence(CancellationToken cancellationToken)
+        {
+            _isRolling = true;
+            OnStartedRolling.Invoke();
+            cursorNotifier.enabled = false;
+            FPSManager.FPS = TargetFPS.High;
+            var up = -Gravity.normalized;
+            transform.position += up * 0.5f;
+            transform.rotation = Random.rotation;
+            _rigidbody.isKinematic = false;
+            _rigidbody.velocity = up * rollLiftSpeed * (RollInSecret ? 0.5f : 1);
+            // Make sure we don't just spin around one axis
+            _rigidbody.angularVelocity = rollSpeed * new Vector3(RandomSign * Random.Range(0.5f, 1f), RandomSign * Random.Range(0.5f, 1f), RandomSign * Random.Range(0.5f, 1f));
+            _joint.spring = 0;
+            var gravity = ApplyGravitySequence(cancellationToken);
+            await UniTask.WaitUntil(() => _rigidbody.velocity.y < 0, cancellationToken: cancellationToken);
+            _joint.spring = _jointSpringAmount;
+            Debug.Log($"{_rigidbody.velocity}");
+
+            await gravity;
+            Debug.Log($"sleeping.");
+            FPSManager.FPS = TargetFPS.Low;
+            cursorNotifier.enabled = true;
+            _isRolling = false;
+            OnRotated.Invoke();
+            OnRolled.Invoke();
         }
     }
 }

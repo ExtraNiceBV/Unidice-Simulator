@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Unidice.Simulator.UI
 {
-    public class ButtonLock : MonoBehaviour
+    public class ButtonLock : UIBehaviour
     {
         [SerializeField] private GameObject objectLocked;
         [SerializeField] private GameObject objectUnlocked;
@@ -12,7 +14,7 @@ namespace Unidice.Simulator.UI
 
         internal readonly UnityEvent onToggled = new UnityEvent();
 
-        public void Awake()
+        protected override void Awake()
         {
             GetComponent<Button>().onClick.AddListener(Press);
             SetLocked(false);
@@ -22,8 +24,6 @@ namespace Unidice.Simulator.UI
         {
             objectUnlocked.SetActive(!value);
             objectLocked.SetActive(value);
-            var canvasGroup = GetComponent<CanvasGroup>();
-            //if (canvasGroup) canvasGroup.alpha = value ? 1 : 0.2f;
             Locked = value;
             onToggled.Invoke();
         }

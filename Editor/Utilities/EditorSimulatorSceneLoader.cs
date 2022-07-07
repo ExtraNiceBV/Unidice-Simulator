@@ -1,5 +1,4 @@
 using System.Linq;
-using Harmony;
 using Unidice.SDK.System;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -59,7 +58,7 @@ namespace Unidice.Simulator.Utilities
                     EditorSceneManager.MoveSceneBefore(scene, SceneManager.GetSceneAt(0));
                     if(EditorBuildSettings.scenes.All(s => s.path != path))
                     {
-                        EditorBuildSettings.scenes = EditorBuildSettings.scenes.AddToArray(new EditorBuildSettingsScene(path, true));
+                        EditorBuildSettings.scenes = EditorBuildSettings.scenes.Append(new EditorBuildSettingsScene(path, true)).ToArray();
                     }
                     _simulatorSceneLoaded = true;
                     break;
