@@ -16,11 +16,7 @@ namespace Template.Generators
 
         protected ImageSequence CreateSequence(Texture2D texture, string title)
         {
-            var sequence = ScriptableObject.CreateInstance<ImageSequence>();
-            sequence.name = title;
-            sequence.animation = new[] { texture };
-            sequence.backgroundLayers = backgroundLayers;
-            return sequence;
+            return ImageSequence.Create(title, new[] { texture }, backgroundLayers, quality: 0.35f);
         }
 
         protected Texture2D CreateTexture(string title)
