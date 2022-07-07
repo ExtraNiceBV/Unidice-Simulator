@@ -199,6 +199,7 @@ namespace Template
             {
                 foreach (var s in _activeScreens.OfType<ScreenBase>())
                 {
+                    if (screen.Equals(s)) continue;
                     // Close currently active screen. But don't run the code inside this loop.
                     Invoker.Invoke(() => s.Close(), 0, DelayType.Realtime);
                     s.gameObject.SetActive(false); // So we can't click through the role choice screen
