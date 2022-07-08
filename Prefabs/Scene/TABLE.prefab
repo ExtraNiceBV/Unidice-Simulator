@@ -1309,14 +1309,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6164958655234552836, guid: 1f3d02f91f03c7a4082563f415ca3aea, type: 3}
-      propertyPath: rotator
-      value: 
-      objectReference: {fileID: 1438771972402694068}
-    - target: {fileID: 6164958655234552836, guid: 1f3d02f91f03c7a4082563f415ca3aea, type: 3}
-      propertyPath: zoomSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6164958655234552836, guid: 1f3d02f91f03c7a4082563f415ca3aea, type: 3}
       propertyPath: objSecretZone
       value: 
       objectReference: {fileID: 8110068289819133328}
@@ -1338,17 +1330,6 @@ PrefabInstance:
       objectReference: {fileID: 7488723054180906222}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f3d02f91f03c7a4082563f415ca3aea, type: 3}
---- !u!114 &1438771972402694068 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5913181928923716761, guid: 1f3d02f91f03c7a4082563f415ca3aea, type: 3}
-  m_PrefabInstance: {fileID: 4753651519169501997}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8110068289420999309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbe216da90274f9c8c5a924a616a214e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8110068289420999309 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3563645815815741856, guid: 1f3d02f91f03c7a4082563f415ca3aea, type: 3}
