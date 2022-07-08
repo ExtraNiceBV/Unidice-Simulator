@@ -136,12 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   images:
     loadedImages: []
-    blitURP10:
-      materialBackground: {fileID: 2100000, guid: c9a8612a452f14a4991630649ffda3c0, type: 2}
-      materialLayer: {fileID: 2100000, guid: 0d78c7d7756676c41b788b2612e517ed, type: 2}
-    blitURP12:
-      materialBackground: {fileID: 2100000, guid: 134c6cd57e835f644a68bfa469498f7b, type: 2}
-      materialLayer: {fileID: 2100000, guid: f891052ec2e65a741bb91b2c02a7c9a0, type: 2}
+    materialBlit: {fileID: 2100000, guid: f891052ec2e65a741bb91b2c02a7c9a0, type: 2}
   sides:
     top:
       renderer: {fileID: 3563645817576219094}

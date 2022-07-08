@@ -215,6 +215,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -200
       objectReference: {fileID: 0}
+    - target: {fileID: 3417172703563169684, guid: e397cb39369e47d498b2dcb63464b06f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3417172703587240308, guid: e397cb39369e47d498b2dcb63464b06f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -7.200001
@@ -291,6 +295,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3417172705215249807, guid: e397cb39369e47d498b2dcb63464b06f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e397cb39369e47d498b2dcb63464b06f, type: 3}
 --- !u!1001 &8110068289462532423
@@ -300,6 +308,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1474376807802318633, guid: dfffaac6f8a283c419a15a4c031668be, type: 3}
+      propertyPath: images.blitURP10.materialLayer
+      value: 
+      objectReference: {fileID: 2100000, guid: f891052ec2e65a741bb91b2c02a7c9a0, type: 2}
+    - target: {fileID: 1474376807802318633, guid: dfffaac6f8a283c419a15a4c031668be, type: 3}
+      propertyPath: images.blitURP10.materialBackground
+      value: 
+      objectReference: {fileID: 2100000, guid: f891052ec2e65a741bb91b2c02a7c9a0, type: 2}
     - target: {fileID: 8110068288350539481, guid: dfffaac6f8a283c419a15a4c031668be, type: 3}
       propertyPath: m_RootOrder
       value: 0
