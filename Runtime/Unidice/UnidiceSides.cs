@@ -18,9 +18,9 @@ namespace Unidice.Simulator.Unidice
         [SerializeField] private UnidiceSide front;
         [SerializeField] private UnidiceSide back;
 
+        public Vector3 Gravity { get; internal set; } = Vector3.up * -10;
         private UnidiceSide[] _all;
         private Transform _transform;
-        private ImageDatabase _database;
 
         public SideEvent OnTapEnabled { get; } = new SideEvent();
         public SideEvent OnTapDisabled { get; } = new SideEvent();
@@ -29,7 +29,6 @@ namespace Unidice.Simulator.Unidice
         {
             _all = new[] { top, bottom, left, right, front, back };
             _transform = transform;
-            _database = database;
 
             foreach (var side in _all) side.Initialize(database);
         }
@@ -105,17 +104,9 @@ namespace Unidice.Simulator.Unidice
         {
             Vector3 tDir;
             if (side == SideWorld.Top)
-                tDir = Vector3.up;
+                tDir = -Gravity.normalized;
             else if (side == SideWorld.Bottom)
-                tDir = -Vector3.up;
-            //else if (side == SideWorld.Front)
-            //    tDir = Vector3.forward;
-            //else if (side == SideWorld.Back)
-            //    tDir = -Vector3.forward;
-            //else if (side == SideWorld.Left)
-            //    tDir = Vector3.right;
-            //else if (side == SideWorld.Right)
-            //    tDir = -Vector3.right;
+                tDir = Gravity.normalized;
             else
                 throw new ArgumentOutOfRangeException(nameof(side), side, null);
 

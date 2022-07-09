@@ -15,7 +15,7 @@ namespace Unidice.Simulator.Unidice
         [SerializeField] private int rollLiftSpeed = 5;
         [SerializeField] private CursorNotifier cursorNotifier;
 
-        public Vector3 Gravity = Vector3.up * -10;
+        public Vector3 Gravity { get; internal set; } = Vector3.up * -10;
         private bool _isRolling;
         private SpringJoint _joint;
         private float _jointSpringAmount;
@@ -39,7 +39,6 @@ namespace Unidice.Simulator.Unidice
                 _rigidbody.AddForce(Gravity, ForceMode.Acceleration);
                 await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken);
             }
-            Debug.Log("Gravity done.");
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -98,10 +97,8 @@ namespace Unidice.Simulator.Unidice
             var gravity = ApplyGravitySequence(cancellationToken);
             await UniTask.WaitUntil(() => _rigidbody.velocity.y < 0, cancellationToken: cancellationToken);
             _joint.spring = _jointSpringAmount;
-            Debug.Log($"{_rigidbody.velocity}");
 
             await gravity;
-            Debug.Log($"sleeping.");
             FPSManager.FPS = TargetFPS.Low;
             cursorNotifier.enabled = true;
             _isRolling = false;

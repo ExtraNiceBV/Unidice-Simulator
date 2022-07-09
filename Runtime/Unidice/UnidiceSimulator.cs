@@ -50,7 +50,9 @@ namespace Unidice.Simulator.Unidice
             var transformBase = transform.parent;
             transformBase.position = Vector3.Lerp(start.position, end.position, _zoomPercentage);
             transformBase.rotation = Quaternion.Lerp(start.rotation, end.rotation, _zoomPercentage);
-            rotator.Gravity = transformBase.up * -10;
+            var gravity = transformBase.up * -10;
+            rotator.Gravity = gravity;
+            sides.Gravity = gravity;
         }
 
         public void OnDestroy()
