@@ -12,7 +12,7 @@ namespace Unidice.Simulator.Utilities
     /// </summary>
     [CustomEditor(typeof(ScriptableObject), true)]
     [CanEditMultipleObjects]
-    public class SwapScriptableObjectTypeEditor : UnityEditor.Editor
+    public class SwapScriptableObjectTypeEditor : Editor
     {
         public override void OnInspectorGUI()
         {

@@ -116,19 +116,12 @@ namespace Unidice.Simulator.Utilities
                 instance = Activator.CreateInstance(type);
             }
 
-            if (property.propertyType == SerializedPropertyType.ObjectReference)
+            property.managedReferenceValue = property.propertyType switch
             {
-                throw new NotSupportedException($"ObjectReference {property.serializedObject.targetObject.GetType().Name} {property.type}");
-            }
-            else if (property.propertyType == SerializedPropertyType.ManagedReference)
-            {
-                property.managedReferenceValue = instance;
-            }
-            else
-            {
-                // Not supported
-                throw new NotSupportedException();
-            }
+                SerializedPropertyType.ObjectReference => throw new NotSupportedException($"ObjectReference {property.serializedObject.targetObject.GetType().Name} {property.type}"),
+                SerializedPropertyType.ManagedReference => instance,
+                _ => throw new NotSupportedException()
+            };
 
             property.serializedObject.ApplyModifiedPropertiesWithoutUndo();
         }

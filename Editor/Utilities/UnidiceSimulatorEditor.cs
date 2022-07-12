@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Unidice.Simulator.Utilities
 {
     [CustomEditor(typeof(UnidiceSimulator))]
-    public class UnidiceSimulatorEditor : UnityEditor.Editor
+    public class UnidiceSimulatorEditor : Editor
     {
         public override void OnInspectorGUI()
         {
