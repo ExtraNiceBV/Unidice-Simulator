@@ -1,5 +1,4 @@
-﻿using Unidice.SDK.Unidice;
-using Unidice.Simulator.Unidice;
+﻿using Unidice.Simulator.Unidice;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +6,11 @@ namespace Unidice.Simulator.UI
 {
     public class ButtonRoll : MonoBehaviour
     {
-        private UnidiceSimulator _unidice;
         private UnidiceRotator _rotator;
         [SerializeField] private Button button;
 
         public void Start()
         {
-            _unidice = FindObjectOfType<UnidiceSimulator>();
             _rotator = FindObjectOfType<UnidiceRotator>();
             _rotator.OnStartedRolling.AddListener(OnRolling);
             _rotator.OnRolled.AddListener(OnRolled);
@@ -28,11 +25,6 @@ namespace Unidice.Simulator.UI
         private void OnRolling()
         {
             button.interactable = false;
-        }
-
-        public void TapTop()
-        {
-            _unidice.Sides.Tap(SideWorld.Top);
         }
     }
 }

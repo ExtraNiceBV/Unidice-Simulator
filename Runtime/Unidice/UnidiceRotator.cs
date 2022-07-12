@@ -6,10 +6,11 @@ using Unidice.SDK.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using Debug = UnityEngine.Debug;
 
 namespace Unidice.Simulator.Unidice
 {
-    public class UnidiceRotator : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IUnidiceRotator
+    public class UnidiceRotator : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IUnidiceRotator, IPointerClickHandler
     {
         [SerializeField] private int rollSpeed = 20;
         [SerializeField] private int rollLiftSpeed = 5;
@@ -20,6 +21,7 @@ namespace Unidice.Simulator.Unidice
         private SpringJoint _joint;
         private float _jointSpringAmount;
         private Rigidbody _rigidbody;
+        private int _clickMask;
 
         private static int RandomSign => Random.value > 0.5f ? 1 : -1;
 
@@ -29,6 +31,7 @@ namespace Unidice.Simulator.Unidice
             _rigidbody.isKinematic = true;
             _joint = GetComponent<SpringJoint>();
             _jointSpringAmount = _joint.spring;
+            _clickMask = LayerMask.GetMask("Table");
         }
 
         private async UniTask ApplyGravitySequence(CancellationToken cancellationToken)
@@ -80,6 +83,11 @@ namespace Unidice.Simulator.Unidice
             if (!_isRolling) RollSequence(this.GetCancellationTokenOnDestroy()).Forget();
         }
 
+        public void Shake()
+        {
+            Debug.Log("Shake");
+        }
+
         private async UniTask RollSequence(CancellationToken cancellationToken)
         {
             _isRolling = true;
@@ -104,6 +112,25 @@ namespace Unidice.Simulator.Unidice
             _isRolling = false;
             OnRotated.Invoke();
             OnRolled.Invoke();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            var ray = new Ray(eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal * -0.3f);
+
+            Debug.DrawRay(ray.origin, ray.direction, Color.cyan, 2, false);
+            var result = new RaycastHit[3];
+            var hits = Physics.RaycastNonAlloc(ray, result, 0.3f, _clickMask, QueryTriggerInteraction.Collide);
+
+            for (int i = 0; i < hits; i++)
+            {
+                var screen = result[i].collider.GetComponent<TappableScreen>();
+                if (screen)
+                {
+                    screen.OnClick(eventData);
+                    break;
+                }
+            }
         }
     }
 }

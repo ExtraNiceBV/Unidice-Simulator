@@ -13,7 +13,7 @@ namespace Unidice.Simulator.Unidice
         private static readonly int ID_MainTex = Shader.PropertyToID("_MainTex");
         private static readonly int ID_Brightness = Shader.PropertyToID("_Brightness");
 
-        [SerializeField] private MeshRenderer renderer;
+        [SerializeField] private TappableScreen screen;
         [SerializeField] private Vector3 normal;
         [SerializeField] private string name;
 
@@ -21,7 +21,7 @@ namespace Unidice.Simulator.Unidice
         private Texture2D _currentTexture;
         private ImageDatabase _database;
         private double _startTime;
-        private Material material;
+        private Material _material;
         private double _timeLastRandomFrame;
         private int _lastRandomFrame;
         public ImageSequence CurrentSequence { get; private set; }
@@ -30,8 +30,8 @@ namespace Unidice.Simulator.Unidice
 
         public float Brightness
         {
-            set => material.SetFloat(ID_Brightness, value);
-            get => material.GetFloat(ID_Brightness);
+            set => _material.SetFloat(ID_Brightness, value);
+            get => _material.GetFloat(ID_Brightness);
         }
 
         public override string ToString()
@@ -42,8 +42,9 @@ namespace Unidice.Simulator.Unidice
         public void Initialize(ImageDatabase database)
         {
             _database = database;
-            renderer.sharedMaterial = material = new Material(renderer.sharedMaterial); // Create copy so changes don't affect assets
+            _material = screen.GetMaterial();
             Brightness = 1;
+            screen.onDoubleClick.AddListener(Tap);
         }
 
         public void Set(ImageSequence sequence)
@@ -73,8 +74,8 @@ namespace Unidice.Simulator.Unidice
 
         private void SetTexture(Texture2D image)
         {
-            material.SetTexture(ID_EmissionMap, image);
-            material.SetTexture(ID_MainTex, image);
+            _material.SetTexture(ID_EmissionMap, image);
+            _material.SetTexture(ID_MainTex, image);
         }
 
         public void Update()
