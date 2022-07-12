@@ -225,10 +225,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe216da90274f9c8c5a924a616a214e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollSpeed: 15
-  rollLiftSpeed: 5
   cursorNotifier: {fileID: 1286057449575414916}
-  Gravity: {x: -0, y: -10, z: -0}
+  shakeSpeed: 50
+  shakeDuration: 0.5
+  shakeStrength: 0.4
 --- !u!114 &1286057449575414916
 MonoBehaviour:
   m_ObjectHideFlags: 0

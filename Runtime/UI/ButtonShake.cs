@@ -19,5 +19,10 @@ namespace Unidice.Simulator.UI
         {
             _rotator.Shake();
         }
+
+        public void Update()
+        {
+            button.interactable = !_rotator.IsBusy;
+        }
     }
 }

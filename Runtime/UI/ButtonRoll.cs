@@ -12,19 +12,12 @@ namespace Unidice.Simulator.UI
         public void Start()
         {
             _rotator = FindObjectOfType<UnidiceRotator>();
-            _rotator.OnStartedRolling.AddListener(OnRolling);
-            _rotator.OnRolled.AddListener(OnRolled);
             button.onClick.AddListener(_rotator.Roll);
         }
 
-        private void OnRolled()
+        public void Update()
         {
-            button.interactable = true;
-        }
-
-        private void OnRolling()
-        {
-            button.interactable = false;
+            button.interactable = !_rotator.IsBusy;
         }
     }
 }
