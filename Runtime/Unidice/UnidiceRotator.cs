@@ -19,6 +19,7 @@ namespace Unidice.Simulator.Unidice
         private SpringJoint _joint;
         private float _jointSpringAmount;
         private Rigidbody _rigidbody;
+        private float _durationNotMoving;
 
         [SerializeField] private CursorNotifier cursorNotifier;
         [SerializeField] private float shakeSpeed = 50;
@@ -94,11 +95,31 @@ namespace Unidice.Simulator.Unidice
 
         private async UniTask ApplyGravitySequence(CancellationToken cancellationToken)
         {
-            while (!_rigidbody.IsSleeping() && _rigidbody.angularVelocity.magnitude > 0.06f)
+            float durationNotMoving = 0;
+            while (!_rigidbody.IsSleeping())
             {
+                // Sleeping has to be done manually - barely moving?
+                if (_rigidbody.velocity.sqrMagnitude < 0.01f)
+                {
+                    durationNotMoving += Time.fixedDeltaTime;
+                    if (durationNotMoving >= 0.1f) // after amount of time not moving
+                    {
+                        _rigidbody.Sleep();
+                        await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken);
+                        continue;
+                    }
+                }
+                else durationNotMoving = 0;
+
+                // By adding force manually, we prevent sleeping
                 _rigidbody.AddForce(Gravity, ForceMode.Acceleration);
                 await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken);
             }
+        }
+
+        public void FixedUpdate()
+        {
+ 
         }
 
         public void Roll()
