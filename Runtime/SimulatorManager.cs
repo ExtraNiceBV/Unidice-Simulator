@@ -30,7 +30,9 @@ namespace Unidice.Simulator
             if (Application.isEditor || Application.platform == RuntimePlatform.WebGLPlayer)
                 SceneManager.LoadScene(0);
             else
-                Application.Quit();
+                //Application.Quit();
+                SceneManager.LoadScene(0);
+            // TODO: Show different button based on situation
         }
     }
 }
